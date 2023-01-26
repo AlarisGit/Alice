@@ -10,6 +10,7 @@ OPENSSL_HOME=$OPENSSL_BASE/openssl
 LIBDIR=$PYTHON_HOME/lib
 
 INSTALL_SCRIPT_DIR=`pwd`
+SETENV=$HOME/setenv.sh
 
 : '
 sudo yum install -y mc make gcc gcc-c++ wget zlib zlib-devel libffi-devel maven perl
@@ -61,8 +62,11 @@ cat ${PROFILE}.backup > $PROFILE
 echo "export PATH=$PYTHON_HOME/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin" >> $PROFILE
 #echo "export PYTHONPATH=$LIBDIR:$HOME/python/Python-$PYTHON_VERSION" >> $PROFILE
 echo "export PYTHONPATH=$LIBDIR" >> $PROFILE
+echo "export PYTHONPATH=$LIBDIR" >> $SETENV
 echo "export LD_LIBRARY_PATH=$LIBDIR" >> $PROFILE
-#echo "export LD_PRELOAD=$HOME/python/lib/python$PYTHON_MAJOR_VERSION.so.1.0:$LIBDIR/libalice.so:$LIBDIR/libalice2.so" >> $PROFILE
+echo "export LD_LIBRARY_PATH=$LIBDIR" >> $SETENV
+echo "export LD_PRELOAD=$HOME/python/lib/python$PYTHON_MAJOR_VERSION.so.1.0" >> $SETENV
+chmod 755 $SETENV
 
 source $PROFILE
 
@@ -86,12 +90,12 @@ mkdir -p $LIBDIR
 rm -f $LIBDIR/libalice*.so*
 
 
-python$PYTHON_MAJOR_VERSION -m nuitka --module src/libalice.py --include-package=requests --include-package=ssl --include-package=urllib3 --include-package=json
-rm -rf libalice.build libalice.pyi
-chmod 755 libalice.cpython*.so
-mv -f libalice.cpython*.so $LIBDIR/libalice.so
+python$PYTHON_MAJOR_VERSION -m nuitka --module src/libalice2.py --include-package=requests --include-package=ssl --include-package=urllib3 --include-package=json
+rm -rf libalice2.build libalice2.pyi
+chmod 755 libalice2.cpython*.so
+mv -f libalice2.cpython*.so $LIBDIR/libalice2.so
 
-gcc -g -shared -pthread -fPIC -fwrapv -O2 -L$LIBDIR -Wl,--strip-all -Wall -fno-strict-aliasing -I$PYTHON_HOME/include/python$PYTHON_MAJOR_VERSION src/embed.c -o $LIBDIR/libalice2.so
+gcc -g -shared -pthread -fPIC -fwrapv -O2 -L$LIBDIR -Wl,--strip-all -Wall -fno-strict-aliasing -I$PYTHON_HOME/include/python$PYTHON_MAJOR_VERSION src/embed.c -o $LIBDIR/libalice.so
 
-gcc -g -fPIC -fwrapv -O2 -Wall -L$LIBDIR -lpython$PYTHON_MAJOR_VERSION -lalice2 -I$PYTHON_HOME/include/python$PYTHON_MAJOR_VERSION test/test.c -o test.x
+gcc -g -fPIC -fwrapv -O2 -Wall -L$LIBDIR -lpython$PYTHON_MAJOR_VERSION -lalice -I$PYTHON_HOME/include/python$PYTHON_MAJOR_VERSION test/test.c -o test.x
 

@@ -13,7 +13,7 @@ unsigned int get_license(const char * sRequestData, char *sResponseData)
     unsigned long uResponseCode = -1;
 
     Py_Initialize();
-    pName = PyUnicode_FromString((char*)"libalice");
+    pName = PyUnicode_FromString((char*)"libalice2");
     pModule = PyImport_Import(pName);
     pDict = PyModule_GetDict(pModule);
     pFunc = PyDict_GetItemString(pDict, (char*)"get_license");
