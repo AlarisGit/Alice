@@ -6,7 +6,7 @@
 unsigned int get_response_c(const char * sRequestData, char *sResponseData)
 {
     printf("=====> enter get_response_c\n");
-    setenv("PYTHONPATH","/home/alice/lib",1);
+//    setenv("PYTHONPATH","/home/alice/lib",1);
 
     PyObject *pName, *pModule, *pDict, *pFunc, *pPyRequestData, *pOutValue;
     const char *sResult = "unknown error";
