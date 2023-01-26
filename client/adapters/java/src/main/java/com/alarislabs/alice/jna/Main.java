@@ -14,7 +14,7 @@ public class Main {
     	    long responseCode;
 
             System.out.printf("Call get_response_c(%s)\n", requestData);
-	    responseCode = lib.get_response_c(requestData, responseData);
+	    responseCode = lib.get_license(requestData, responseData);
     	    System.out.printf("Got response code %d\n", responseCode);
     	    System.out.printf("Got response data: %s\n", responseData.getString(0));
         }

@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
-unsigned int get_response_c(const char * sRequestData, char *sResponseData)
+unsigned int get_license(const char * sRequestData, char *sResponseData)
 {
-    printf("=====> enter get_response_c\n");
+    printf("=====> enter get_license\n");
 //    setenv("PYTHONPATH","/home/alice/lib",1);
 
     PyObject *pName, *pModule, *pDict, *pFunc, *pPyRequestData, *pOutValue;
@@ -16,7 +16,7 @@ unsigned int get_response_c(const char * sRequestData, char *sResponseData)
     pName = PyUnicode_FromString((char*)"libalice");
     pModule = PyImport_Import(pName);
     pDict = PyModule_GetDict(pModule);
-    pFunc = PyDict_GetItemString(pDict, (char*)"get_response");
+    pFunc = PyDict_GetItemString(pDict, (char*)"get_license");
     PyErr_Print();
 
     if (PyCallable_Check(pFunc))

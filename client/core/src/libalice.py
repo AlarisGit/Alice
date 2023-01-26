@@ -2,7 +2,7 @@ import json
 import requests
 from random import randint
 
-def get_response(rq_data):
+def get_license(rq_data):
     print("=====> PY: in get_response")
     status_code = 0
     if isinstance(rq_data, str):

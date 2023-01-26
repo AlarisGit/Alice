@@ -1,9 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-unsigned int get_value(unsigned int);
-unsigned int get_value_go(unsigned int);
-unsigned int get_response_c(const char *, char *);
+unsigned int get_license(const char *, char *);
 
 int main(){
 //    unsigned int value = get_value(0x01);
@@ -17,7 +15,7 @@ int main(){
     unsigned long uResponseCode;
 
     printf("Call get_response_c(%s)\n", sRequestData);
-    uResponseCode = get_response_c(sRequestData, sResponseData);
+    uResponseCode = get_license(sRequestData, sResponseData);
     printf("Got response code %ld\n", uResponseCode);
     printf("Got response data: %s\n", sResponseData);
 }

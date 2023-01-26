@@ -9,6 +9,6 @@ public interface LibAlice extends Library {
     LibAlice INSTANCE = Native.load("alice2", LibAlice.class);
 
 //  unsigned int get_response_c(const char *, char *);
-    int get_response_c(String req, Pointer resp) throws LastErrorException;;
+    int get_license(String req, Pointer resp) throws LastErrorException;;
 }
 
