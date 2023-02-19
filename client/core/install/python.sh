@@ -17,6 +17,27 @@ mkdir -p $PYTHON_HOME
 
 cd $HOME
 
+mkdir -p $PYTHON_LIB_DIR
+ln -s $PYTHON_LIB_DIR $PYTHON_LIB_DIR/../lib64
+
+if ! [[ -s $LIBFFI_FILE ]] ; then
+  wget -O $LIBFFI_FILE https://github.com/libffi/libffi/archive/refs/heads/master.zip
+fi
+if ! [[ -d $LIBFFI_DIR ]] ; then
+  unzip $LIBFFI_FILE
+fi
+
+cd $LIBFFI_DIR
+sed -i 's/autoreconf /autoreconf27 /' autogen.sh
+
+./autogen.sh 2>&1 | tee -a $LOG_FILE
+./configure --prefix=$PYTHON_HOME 2>&1 | tee -a $LOG_FILE
+make 2>&1 | tee -a $LOG_FILE
+make install 2>&1 | tee -a $LOG_FILE
+
+
+cd $HOME
+
 if ! [[ -s $ZLIB_FILE ]] ; then
   wget https://www.zlib.net/$ZLIB_FILE
 fi
@@ -25,7 +46,8 @@ tar -xzf $ZLIB_FILE
 cd $ZLIB_SOURCE_DIR
 ./configure --prefix=$PYTHON_HOME --libdir=$PYTHON_LIB_DIR --static
 make 2>&1 | tee make.log
-make install 2>&1 | tee -a make.log
+make install 2>&1 | tee -a $LOG_FILE
+
 
 cd $HOME
 
