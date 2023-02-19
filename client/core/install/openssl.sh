@@ -14,9 +14,9 @@ rm -rf $SSL_SOURCE_DIR
 tar -xzf $SSL_SOURCE_FILE
 cd $SSL_SOURCE_DIR
 ./config --prefix=$OPENSSL_HOME --openssldir=$OPENSSL_DIR
-make
-
+make 2>&1 | tee make.log
 rm -rf $OPENSSL_HOME
 rm -rf $OPENSSL_DIR
-make install
+make install 2>&1 | tee -a make.log
+
 
